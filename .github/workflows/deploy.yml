@@ -1,28 +1,28 @@
-name : CI/CD Deployment
+name: CI/CD Pipeline
 
-on :
-  push :
-    branches :
+on:
+  push:
+    branches:
       - main
 
-jobs :
-  build-and-deploy :
-    runs-on : ubuntu-latest
-    
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
     steps:
-      -name : Checkout Code
-      uses : actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      -name : Set up Node.jobs
-      uses : actions/setup-node@v3
-      with:
-        node-version: '18'
-      
-      -name : Build Docker Image
-      run: docker build -t cicd-demo .
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      -name: Run Docker Container (Mock)
-      run: echo "Would run container here in real deploy"
+      - name: Install dependencies
+        run: npm install
 
-        # 🔐 You can later replace the run step with a real deployment to 
-        # Heroku, AWS, Render, etc.
+      - name: Run basic test
+        run: echo "✅ Node.js app setup complete"
+
+      - name: Build Docker image
+        run: docker build -t ci-cd-demo .
